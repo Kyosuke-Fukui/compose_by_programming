@@ -43,6 +43,7 @@ D2|:"Em"EB{c}BA B2 EB|~B2 AB dBAG|"D"FDAD BDAD|FDAD dAFD
         ><br />
         <button onclick="onRender(scoreObj); return false;">楽譜作成</button>
         <button onclick="onMidi(scoreObj); return false;">演奏</button>
+        <button id="save">ABC譜保存</button>
         <p>（例）</p>
         <p>
           <a href="#" onclick="example(); return false;">Cooley's</a>
@@ -53,42 +54,6 @@ D2|:"Em"EB{c}BA B2 EB|~B2 AB dBAG|"D"FDAD BDAD|FDAD dAFD
         <div id="audio"></div>
       </div>
     </div>
-    <script type="text/javascript">
-      var scoreObj;
-
-      //演奏
-      function onMidi(obj) {
-        if (ABCJS.synth.supportsAudio()) {
-          var visualObj = ABCJS.renderAbc("notation", obj)[0];
-
-          var synthControl = new ABCJS.synth.SynthController();
-          synthControl.load("#audio", null, {
-            displayRestart: true,
-            displayPlay: true,
-            displayProgress: true,
-          });
-          synthControl.setTune(visualObj, false);
-        } else {
-          document.querySelector("#audio").innerHTML =
-            "<div class='audio-error'>Audio is not supported in this browser.</div>";
-        }
-      }
-
-      //記譜
-      function onRender(tune, params) {
-        scoreObj = document.getElementById("score").value;
-
-        if (!params) params = {};
-        ABCJS.renderAbc("notation", tune, params);
-        document.getElementById("audio").innerHTML = "";
-      }
-      var cooleys =
-        'X:1\nT: Cooley\'s\nM: 4/4\nL: 1/8\nR: reel\nK: Emin\nD2|:"Em"EB{c}BA B2 EB|~B2 AB dBAG|"D"FDAD BDAD|FDAD dAFD|\n"Em"EBBA B2 EB|B2 AB defg|"D"afe^c dBAF|1"Em"DEFD E2 D2:|2"Em"DEFD E2 gf||\n|:"Em"eB B2 efge|eB B2 gedB|"D"A2 FA DAFA|A2 FA defg|\n"Em"eB B2 eBgB|eB B2 defg|"D"afe^c dBAF|1"Em"DEFD E2 gf:|2"Em"DEFD E4|]\n';
-
-      function example() {
-        onRender(cooleys);
-        onMidi(cooleys);
-      }
-    </script>
+    <script src="index.js"></script>
   </body>
 </html>
